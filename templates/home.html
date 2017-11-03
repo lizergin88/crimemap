@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <meta charset="UTF-8">
     <title>Crime Map</title>
     <script type="text/javascript"
@@ -31,11 +32,34 @@
                     map: map
                 });
             }
+            document.getElementById('latitude').value = location.lat();
+            document.getElementById('longtitude').value = location.lng();
         }
     </script>
 </head>
 <body onload="initialize()">
-<div id="map-canvas" style="width:80%; height:500px;"></div>
+<h1>CrimeMap</h1>
+<p>A map of recent criminal activity in the Grahamstown area</p>
+<div id="map-canvas"></div>
 
+<div id="newcrimeform">
+    <h2>Submit new crime</h2>
+    <form action="/submitcrime" method="POST">
+        <label for="category" id="category"</label>
+        <select name="category" id="category">
+            <option value="muggig">Mugging</option>
+            <option value="breakin">Break-in</option>
+        </select>
+        <label for="date">Date</label>
+        <input name="date" id="date" typr="date">
+        <label for="latitude">Latitude</label>
+        <input name="latitude" id="latitude" type="text">
+        <label for="longtitude">Longtitude</label>
+        <input name="longtitude" id="longtitude" type="text">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" placeholder="A brief but detailed description of the crime"></textarea>
+        <input type="submit" value="Submit">
+    </form>
+</div>
 </body>
 </html>
