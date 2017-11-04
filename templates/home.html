@@ -8,8 +8,8 @@
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <meta charset="UTF-8">
     <title>Crime Map</title>
-    <script type="text/javascript"
-         src="https://maps.googleapis.com/maps/api/js">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9k9qqb6x1fThdPNVr4hVMVNuR-6UZBXo&callback=initMap"
+  type="text/javascript">
     </script>
     <script type="text/javascript">
         var map;
@@ -25,6 +25,18 @@
                 function (event) {
                     placeMarker(event.latLng);
                 });
+            placeCrimes({{ crimes | safe }});
+        }
+
+        function placeCrimes(crimes) {
+            for (i=0; i<crimes.length; i++) {
+                crime = new google.maps.Marker( {
+                    position: new google.maps.LatLng(crimes[i].latitude, crimes[i].longtitude),
+                    map: map,
+                    title: crimes[i].date + "\n" +
+                        crimes[i].category + "\n" + crimes[i].description
+                });
+            }
         }
 
         function placeMarker(location) {
