@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import dbconfig
+
 if dbconfig.test:
     from mockdbhelper import MockDBHelper as DBHelper
 else:
@@ -35,6 +36,17 @@ def clear():
         DB.clear_all()
     except Exception as e:
         print(e)
+    return home()
+
+
+@app.route("/submitcrime", methods=['POST'])
+def submitcrime():
+    category = request.form.get("category")
+    date = request.form.get("date")
+    latitude = float(request.form.get("latitude"))
+    longtitude = float(request.form.get("longtitude"))
+    description = request.form.get("description")
+    DB.add_crime(category, date, latitude, longtitude, description)
     return home()
 
 
